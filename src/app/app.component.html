@@ -1,0 +1,89 @@
+<form id="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" formControlName="username" />
+    <div
+      *ngIf="
+        userForm.get('username').invalid &&
+        (userForm.get('username').dirty || userForm.get('username').touched)
+      "
+    >
+      <div *ngIf="userForm.get('username').errors.required">
+        Username is required
+      </div>
+      <div *ngIf="userForm.get('username').errors.minlength">
+        Username must be at least 3 characters long
+      </div>
+      <div *ngIf="userForm.get('username').errors.maxlength">
+        Username cannot be longer than 24 characters
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" />
+    <div
+      *ngIf="
+        userForm.get('email').invalid &&
+        (userForm.get('email').dirty || userForm.get('email').touched)
+      "
+    >
+      <div *ngIf="userForm.get('email').errors.required">Email is required</div>
+      <div *ngIf="userForm.get('email').errors.email">
+        Email must be a valid email address
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="type">Type:</label>
+    <select id="type" formControlName="type">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+
+    <div
+      *ngIf="
+        userForm.get('type').invalid &&
+        (userForm.get('type').dirty || userForm.get('type').touched)
+      "
+    >
+      <div *ngIf="userForm.get('type').errors.required">Type is required</div>
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password" />
+    <div
+      *ngIf="
+        userForm.get('password').invalid &&
+        (userForm.get('password').dirty || userForm.get('password').touched)
+      "
+    >
+      <div *ngIf="userForm.get('password').errors.required">
+        Password is required
+      </div>
+      <div *ngIf="userForm.get('password').errors.minlength">
+        Password must be at least 5 characters long
+      </div>
+      <div *ngIf="userForm.get('password').errors.maxlength">
+        Password cannot be longer than 24 characters
+      </div>
+      <div *ngIf="userForm.get('password').errors.pattern">
+        Password must contain at least one uppercase letter, one lowercase
+        letter, one special character and no spaces
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    form="user-form"
+    [disabled]="!userForm.valid || submitting"
+  >
+    <ng-container *ngIf="!submitting">Submit</ng-container>
+    <ng-container *ngIf="submitting">Submitting...</ng-container>
+  </button>
+</form>
